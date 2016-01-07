@@ -19,3 +19,7 @@ run the django development server with the command:
 python manage.py runserver
 
 and open the url http://127.0.0.1:8000/ in a browser.
+
+
+NOTE: the code uses Unix-style process forking, and this
+is not available on the  Windows operating system.
