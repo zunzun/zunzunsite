@@ -412,16 +412,12 @@ def HomePageView(request):
     tempDir = settings.TEMP_FILES_DIR
 
     if totalDirSize > maxSize:
-        print "Entered loop"
         totalReduction = 0
         reductionAmount = (totalDirSize - maxSize) + (maxSize * 0.25)
-        print "Reduction amount", reductionAmount
         dirInfo.sort() # delete oldest files first
-        print "Sorting complete"
         for fileItem in dirInfo:
             if totalReduction < reductionAmount:
                 totalReduction += fileItem[1]
-                print "Removing " + os.path.join(tempDir, fileItem[2])
                 try: # prevent possible exceptions from race conditions
                     os.remove(os.path.join(tempDir, fileItem[2]))
                 except:
