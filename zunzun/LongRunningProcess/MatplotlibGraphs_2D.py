@@ -89,7 +89,7 @@ def CommonPlottingCode(in_WidthInPixels, in_HeightInPixels, in_XName, in_YName, 
     relativeWidthPos = (fWIP + textWOffset) / fWIP # plus
     relativeHeightPos = (fHIP - textHOffset) / fHIP # minus
     
-    ax.text(relativeWidthPos, relativeHeightPos, 'zunzun.com',
+    ax.text(relativeWidthPos, relativeHeightPos, 'zunzunsite',
             fontsize= 'xx-small',
             family= 'monospace',
             horizontalalignment='center',

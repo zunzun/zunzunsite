@@ -147,7 +147,7 @@ You must provide any weights you wish to use.
     
         # equation instance is now in hand, make items necessary for user interface
         self.dictionaryToReturn['header_text'] = 'Fitting Interface For ' + self.equation.GetDisplayName() + ' ' + str(self.dimensionality) + 'D<br>' + self.equation.GetDisplayHTML()
-        self.dictionaryToReturn['title_string'] = 'ZunZun.com - ' + self.equation.GetDisplayName() + ' Fitting Interface'
+        self.dictionaryToReturn['title_string'] = 'ZunZunSite - ' + self.equation.GetDisplayName() + ' Fitting Interface'
 
         self.unboundForm.weightedFittingPossibleFlag = not self.spline
 

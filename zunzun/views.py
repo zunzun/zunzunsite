@@ -157,7 +157,7 @@ def StatusView(request):
         startTime = cPickle.loads(str(session_status['start_time']))
         timeStamp = cPickle.loads(str(session_status['timestamp']))
     except:
-        return HttpResponse("I could not read your session data, my apologies. This is usually caused by a stale browser cookie. Please delete the zunzun.com browser cookie and try again.")
+        return HttpResponse("I could not read your session data, my apologies. This is usually caused by a stale browser cookie. Please delete the zunzunsite browser cookie and try again.")
     
     # reload every three seconds
     s = '''<html><head><meta HTTP-EQUIV=REFRESH CONTENT="3; URL='/StatusAndResults/'">
@@ -384,11 +384,11 @@ def FeedbackView(request):
             items_to_render['mainForm'] = form
             return render_to_response('zunzun/invalid_form_data.html', items_to_render)
         msg = 'Email from ' + form.cleaned_data['emailAddress'] + '\n\nAt ' + str(datetime.datetime.now()) + "\n\n" + form.cleaned_data['feedbackText']
-        EmailMessage('ZunZun.com Feedback Form', msg, to = [settings.FEEDBACK_EMAIL_ADDRESS]).send()
+        EmailMessage('ZunZunSite Feedback Form', msg, to = [settings.FEEDBACK_EMAIL_ADDRESS]).send()
 
         return render_to_response('zunzun/feedback_reply.html', {})
     else: # not a POST
-        return HttpResponseRedirect('http://zunzun.com/')
+        return HttpResponseRedirect('/')
 
 
 @cache_control(no_cache=True)
@@ -434,7 +434,7 @@ def HomePageView(request):
     items_to_render = {}
     items_to_render['dim_to_spline_list'] = [['2',  pyeq2.Models_2D.Spline.Spline()], ['3',  pyeq2.Models_3D.Spline.Spline()]]
     items_to_render['dim_to_map_list'] = [['2', GetEquationInfoDictionary(2, 'Standard')], ['3', GetEquationInfoDictionary(3, 'Standard')]]
-    items_to_render['header_text'] = 'ZunZun.com Online Curve Fitting<br>and Surface Fitting Web Site'
+    items_to_render['header_text'] = 'ZunZunSite Online Curve Fitting<br>and Surface Fitting Web Site'
     items_to_render['feedbackForm'] = forms.FeedbackForm()
     items_to_render['loadavg'] = os.getloadavg()
 
@@ -456,9 +456,9 @@ def AllEquationsView(request, inDimensionality, inAllOrStandardOnly): # from url
         items_to_render['sortedEquationClassPropertiesList'] = GetEquationInfoDictionary(3, inAllOrStandardOnly)
     
     if inAllOrStandardOnly == 'All':
-        items_to_render['header_text'] = 'ZunZun.com List Of All ' + inDimensionality + 'D Equations'
+        items_to_render['header_text'] = 'ZunZunSite List Of All ' + inDimensionality + 'D Equations'
     else:
-        items_to_render['header_text'] = 'ZunZun.com List Of All Standard ' + inDimensionality + 'D Equations'
+        items_to_render['header_text'] = 'ZunZunSite List Of All Standard ' + inDimensionality + 'D Equations'
         
     items_to_render['dimensionality'] = inDimensionality
     

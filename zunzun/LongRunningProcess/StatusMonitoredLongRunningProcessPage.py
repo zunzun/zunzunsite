@@ -69,7 +69,7 @@ class NumberedCanvas(canvas.Canvas):
     def draw_page_number(self, page_count):
         self.setFont("Helvetica", 7)
         self.drawRightString(200*mm, 20*mm, "Page %d of %d" % (self._pageNumber, page_count))
-        self.drawCentredString(25*mm, 20*mm, 'http://zunzun.com')
+        self.drawCentredString(25*mm, 20*mm, 'https://github.com/zunzun/zunzunsite')
 
 
 
@@ -184,7 +184,7 @@ You must provide any weights you wish to use.
             largeLogoImage = reportlab.platypus.Image(cStringIO.StringIO(open(os.path.join(settings.TEMP_FILES_DIR, 'static_images/logo.png'), 'rb').read()), 25 * scale * 3, 25 * scale * 3)
 
             tableRow = [largeLogoImage,
-                        'ZunZun.com',
+                        'ZunZunSite',
                         largeLogoImage]
 
             table = reportlab.platypus.Table([tableRow], style=myTableStyle)
@@ -650,8 +650,8 @@ You must provide any weights you wish to use.
 
         itemsToRender['dimensionality'] = str(self.dimensionality)
 
-        itemsToRender['header_text'] = 'ZunZun.com<br>' + self.webFormName
-        itemsToRender['title_string'] = 'ZunZun.com ' + self.webFormName.replace('<br>', ' ')
+        itemsToRender['header_text'] = 'ZunZunSite<br>' + self.webFormName
+        itemsToRender['title_string'] = 'ZunZunSite ' + self.webFormName.replace('<br>', ' ')
 
         itemsToRender['textReports'] = self.textReports
 
@@ -691,8 +691,8 @@ You must provide any weights you wish to use.
         dictionaryToReturn = {}
         dictionaryToReturn['dimensionality'] = str(self.dimensionality)
 
-        dictionaryToReturn['header_text'] = 'ZunZun.com ' + str(self.dimensionality) + 'D Interface<br>' + self.webFormName
-        dictionaryToReturn['title_string'] = 'ZunZun.com ' + str(self.dimensionality) + 'D Interface ' + self.webFormName
+        dictionaryToReturn['header_text'] = 'ZunZunSite ' + str(self.dimensionality) + 'D Interface<br>' + self.webFormName
+        dictionaryToReturn['title_string'] = 'ZunZunSite ' + str(self.dimensionality) + 'D Interface ' + self.webFormName
 
         # make a dimensionality-based unbound Django form
         self.unboundForm = eval('zunzun.forms.CharacterizeDataForm_' + str(self.dimensionality) + 'D()')
