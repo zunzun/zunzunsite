@@ -41,17 +41,17 @@ def parallelWorkFunction(inParameterList):
             return [None, inParameterList[0], inParameterList[1], inParameterList[2]]
         
         t0 = target # always make this first for the result list sort function to work properly
-        t1 = copy.deepcopy(j.__module__)
-        t2 = copy.deepcopy(j.__class__.__name__)
-        t3 = copy.deepcopy(j.extendedVersionHandler.__class__.__name__.split('_')[1])
-        t4 = copy.deepcopy(j.polyfunctional2DFlags)
-        t5 = copy.deepcopy(j.polyfunctional3DFlags)
-        t6 = copy.deepcopy(j.xPolynomialOrder)
-        t7 = copy.deepcopy(j.yPolynomialOrder)
-        t8 = copy.deepcopy(j.rationalNumeratorFlags)
-        t9 = copy.deepcopy(j.rationalDenominatorFlags)
-        t10 = copy.deepcopy(j.fittingTarget)
-        t11 = copy.deepcopy(j.solvedCoefficients)
+        t1 = copy.copy(j.__module__)
+        t2 = copy.copy(j.__class__.__name__)
+        t3 = copy.copy(j.extendedVersionHandler.__class__.__name__.split('_')[1])
+        t4 = copy.copy(j.polyfunctional2DFlags)
+        t5 = copy.copy(j.polyfunctional3DFlags)
+        t6 = copy.copy(j.xPolynomialOrder)
+        t7 = copy.copy(j.yPolynomialOrder)
+        t8 = copy.copy(j.rationalNumeratorFlags)
+        t9 = copy.copy(j.rationalDenominatorFlags)
+        t10 = copy.copy(j.fittingTarget)
+        t11 = copy.copy(j.solvedCoefficients)
         
         j = None
             
@@ -104,6 +104,9 @@ class FunctionFinder(StatusMonitoredLongRunningProcessPage.StatusMonitoredLongRu
         self.parallelWorkItemsList = []
         self.parallelFittingResultsByEquationFamilyDictionary = {}
         self.functionFinderResultsList = []
+        self.maxFFResultsListSize = 1000 # use ""best"" results  only for database speed and size
+        self.bestFFResultTracker = 1.0E300 # to keep track of "best" results
+
 
     def TransferFormDataToDataObject(self, request): # return any error in a user-viewable string (self.dataObject.ErrorString)
         self.CommonCreateAndInitializeDataObject(True)
@@ -172,16 +175,16 @@ class FunctionFinder(StatusMonitoredLongRunningProcessPage.StatusMonitoredLongRu
                 self.fit_skip_count += 1
                 return
                 
-        t0 = copy.deepcopy(self.dataObject.equation.__module__)
-        t1 = copy.deepcopy(self.dataObject.equation.__class__.__name__)
-        t2 = copy.deepcopy(self.dataObject.equation.extendedVersionHandler.__class__.__name__.split('_')[1])
-        t3 = copy.deepcopy(self.dataObject.equation.polyfunctional2DFlags)
-        t4 = copy.deepcopy(self.dataObject.equation.polyfunctional3DFlags)
-        t5 = copy.deepcopy(self.dataObject.equation.xPolynomialOrder)
-        t6 = copy.deepcopy(self.dataObject.equation.yPolynomialOrder)
-        t7 = copy.deepcopy(self.dataObject.equation.rationalNumeratorFlags)
-        t8 = copy.deepcopy(self.dataObject.equation.rationalDenominatorFlags)
-        t9 = copy.deepcopy(self.dataObject.equation.fittingTarget)
+        t0 = copy.copy(self.dataObject.equation.__module__)
+        t1 = copy.copy(self.dataObject.equation.__class__.__name__)
+        t2 = copy.copy(self.dataObject.equation.extendedVersionHandler.__class__.__name__.split('_')[1])
+        t3 = copy.copy(self.dataObject.equation.polyfunctional2DFlags)
+        t4 = copy.copy(self.dataObject.equation.polyfunctional3DFlags)
+        t5 = copy.copy(self.dataObject.equation.xPolynomialOrder)
+        t6 = copy.copy(self.dataObject.equation.yPolynomialOrder)
+        t7 = copy.copy(self.dataObject.equation.rationalNumeratorFlags)
+        t8 = copy.copy(self.dataObject.equation.rationalDenominatorFlags)
+        t9 = copy.copy(self.dataObject.equation.fittingTarget)
 
         if self.dataObject.equation.CanLinearSolverBeUsedForSSQABS() and self.dataObject.equation.fittingTarget == "SSQABS":
             self.linearFittingList.append([t0, t1, t2, t3, t4, t5, t6, t7, t8, t9])
@@ -289,7 +292,7 @@ class FunctionFinder(StatusMonitoredLongRunningProcessPage.StatusMonitoredLongRu
                                             if len(self.dataObject.equation.polyfunctional2DFlags) <= loopMaxCoeffs and 0 not in self.dataObject.equation.polyfunctional2DFlags and len(self.dataObject.equation.polyfunctional2DFlags) < self.dataObject.maxCoeffs:
                                                 self.dataObject.equation.__init__(self.dataObject.fittingTarget, extendedName)
                                                 self.dataObject.equation.dataCache = externalDataCache
-                                                temp = copy.deepcopy(self.dataObject.equation.polyfunctional2DFlags)
+                                                temp = copy.copy(self.dataObject.equation.polyfunctional2DFlags)
                                                 temp.append(0) # offset term if one is not already used and enough coefficients
                                                 self.dataObject.equation.polyfunctional2DFlags = temp
                                                 self.AddEquationInfoToLinearAndParallelFittingListsAndCheckOneSecond()
@@ -310,7 +313,7 @@ class FunctionFinder(StatusMonitoredLongRunningProcessPage.StatusMonitoredLongRu
                                         if len(self.dataObject.equation.polyfunctional3DFlags) == loopMaxCoeffs and [0, 0] not in self.dataObject.equation.polyfunctional3DFlags and len(self.dataObject.equation.polyfunctional3DFlags) < self.dataObject.maxCoeffs:
                                             self.dataObject.equation.__init__(self.dataObject.fittingTarget, extendedName)
                                             self.dataObject.equation.dataCache = externalDataCache
-                                            temp = copy.deepcopy(self.dataObject.equation.polyfunctional3DFlags)
+                                            temp = copy.copy(self.dataObject.equation.polyfunctional3DFlags)
                                             temp.append([0, 0]) # offset term if one is not already used
                                             self.dataObject.equation.polyfunctional3DFlags = temp
                                             self.AddEquationInfoToLinearAndParallelFittingListsAndCheckOneSecond()
@@ -351,8 +354,6 @@ class FunctionFinder(StatusMonitoredLongRunningProcessPage.StatusMonitoredLongRu
         
         while len(self.parallelWorkItemsList) > 0:
 
-            self.countOfParallelWorkItemsRun = len(self.functionFinderResultsList)
-            
             delta = self.GetParallelProcessCount() - len(multiprocessing.active_children())
             
             # increase number of parallel processes?
@@ -381,8 +382,14 @@ class FunctionFinder(StatusMonitoredLongRunningProcessPage.StatusMonitoredLongRu
                 for i in range(qsize):
                     resultValue = fittingResultsQueue.get()
                     if resultValue[0]:
-                        self.functionFinderResultsList.append(resultValue)
-                        self.countOfParallelWorkItemsRun = len(self.functionFinderResultsList)
+                        if len(self.functionFinderResultsList) < self.maxFFResultsListSize:
+                            self.functionFinderResultsList.append(resultValue)
+                        else:
+                            self.functionFinderResultsList.sort()
+                            if self.functionFinderResultsList[-1][0] < self.bestFFResultTracker:
+                                self.bestFFResultTracker = self.functionFinderResultsList[-1][0]
+                                self.functionFinderResultsList[-1] = resultValue
+                        self.countOfParallelWorkItemsRun += 1
                     else:
                         #print '*** fittingResultsQueue.get() returned', str(resultValue)
                         sys.stdout.flush()
@@ -396,8 +403,14 @@ class FunctionFinder(StatusMonitoredLongRunningProcessPage.StatusMonitoredLongRu
                 for i in range(qsize):
                     resultValue = fittingResultsQueue.get()
                     if resultValue[0]:
-                        self.functionFinderResultsList.append(resultValue)
-                        self.countOfParallelWorkItemsRun = len(self.functionFinderResultsList)
+                        if len(self.functionFinderResultsList) < self.maxFFResultsListSize:
+                            self.functionFinderResultsList.append(resultValue)
+                        else:
+                            self.functionFinderResultsList.sort()
+                            if self.functionFinderResultsList[-1][0] < self.bestFFResultTracker:
+                                self.bestFFResultTracker = self.functionFinderResultsList[-1][0]
+                                self.functionFinderResultsList[-1] = resultValue
+                        self.countOfParallelWorkItemsRun += 1
                     else:
                         #print '*** fittingResultsQueue.get() returned', str(resultValue)
                         sys.stdout.flush()
@@ -411,8 +424,14 @@ class FunctionFinder(StatusMonitoredLongRunningProcessPage.StatusMonitoredLongRu
             for i in range(qsize):
                 resultValue = fittingResultsQueue.get()
                 if resultValue[0]:
-                    self.functionFinderResultsList.append(resultValue)
-                    self.countOfParallelWorkItemsRun = len(self.functionFinderResultsList)
+                    if len(self.functionFinderResultsList) < self.maxFFResultsListSize:
+                        self.functionFinderResultsList.append(resultValue)
+                    else:
+                        self.functionFinderResultsList.sort()
+                        if self.functionFinderResultsList[-1][0] < self.bestFFResultTracker:
+                            self.bestFFResultTracker = self.functionFinderResultsList[-1][0]
+                            self.functionFinderResultsList[-1] = resultValue
+                    self.countOfParallelWorkItemsRun += 1
                 else:
                     #print '*** fittingResultsQueue.get() returned', str(resultValue)
                     sys.stdout.flush()
