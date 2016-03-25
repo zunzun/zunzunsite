@@ -110,7 +110,7 @@ class FunctionFinderResults(FittingBaseClass.FittingBaseClass):
 
             if self.debug: print "**** FF Results GenerateListOfOutputReports 2.2: i=", str(i)
 
-            reportDataObject = copy.deepcopy(self.dataObject) 
+            reportDataObject = copy.copy(self.dataObject) 
 
             if self.debug: print "**** FF Results GenerateListOfOutputReports 2.3: i=", str(i)
 
