@@ -1,9 +1,12 @@
-You will need to install scipy, matplotlib, django, beautifulsoup and
-reportlab to run this software.  On Debian and Ubuntu, you can run:
+You will need to install scipy, matplotlib, django, beautifulsoup,
+imagemagick, gifsicle, reportlab to run this software.
+
+On Debian and Ubuntu, you can run:
 
 apt-get install python-scipy python-matplotlib
 apt-get install python-django python-beautifulsoup
 apt-get install python-reportlab python-reportlab-accel
+apt-get install imagemagick gifsicle
 
 
 then install the pyeq2 fitting code with these commands:
