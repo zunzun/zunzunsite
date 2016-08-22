@@ -221,6 +221,9 @@ You must provide any weights you wish to use.
                 pageElements.append(reportlab.platypus.Preformatted(report.name, styles['SmallCode']))
                 pageElements.append(reportlab.platypus.XPreformatted('<br/><br/><br/>', styles['CenteredBodyText']))
                 
+                if report.stringList[0] == '</pre>': # corrects fit statistics not in PDF
+                    report.stringList = report.stringList[1:]
+
                 joinedString = string.join(report.stringList, '\n')
                 
                 if -1 != report.name.find('Coefficients'):
