@@ -236,6 +236,9 @@ smoothnessControl3DChoices = [['1', '1'],
                               ['24', '24'],
                               ['25', '25']]
 
+smoothnessExactOrMaxChoices = [['M','Use value as Maximum number of parameters'],
+                               ['E','Use value as Exact number of parameters']]
+
 splineOrderChoices = [['1','1: Linear'],
                       ['2','2: Quadratic'],
                       ['3','3: Cubic'],

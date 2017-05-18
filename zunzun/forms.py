@@ -379,6 +379,7 @@ class FunctionFinder (UsesDataForm_BaseClass) :
     extendedEquationTypes = django.forms.MultipleChoiceField( widget=myWidgets.BR_CheckboxSelectMultiple_Widget(), choices=formConstants.extendedEquationTypeChoices, initial=['STANDARD'])
     dataNameX = django.forms.CharField(max_length=40, initial='X data')
     dataNameY = django.forms.CharField(max_length=40, initial='Y data')
+    smoothnessExactOrMax = django.forms.ChoiceField( widget=django.forms.widgets.RadioSelect(renderer=myWidgets.BR_RadioFieldRenderer), choices=formConstants.smoothnessExactOrMaxChoices, initial='M' )
 
 
     def clean(self): # override, no graph scales in form for function finders
